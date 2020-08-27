@@ -1,0 +1,64 @@
+Player                                                                                         
+------                                                                                         
+PlayerId                             Name                                                      
+------------------------------------ ------------                                              
+8b08cbd3-b21e-4fb1-a37b-0221d6846b4a John                                                      
+8779d01c-daef-436e-bb68-d077a5d32d82 Janet                                                     
+Rating                                                                                         
+------                                                                                         
+RatingId                             PlayerId                             RatingSourceId Rating RatingDate         
+------------------------------------ ------------------------------------ -------------- ------ -------------------
+ab8d68a0-a1d2-40e1-8577-165bed170212 8779d01c-daef-436e-bb68-d077a5d32d82              1   1401 27/08/2020 10:20:31
+54fb3eaf-cbc2-4f5d-bc4b-9f6248f558b4 8b08cbd3-b21e-4fb1-a37b-0221d6846b4a              4   1216 27/08/2020 10:20:32
+57cadf56-2f5d-4f07-bb4b-ad3bce9c1c0a 8779d01c-daef-436e-bb68-d077a5d32d82              4   1642 27/08/2020 10:20:31
+RatingSource                                                                                   
+------------                                                                                   
+RatingSourceId Name                                                                            
+-------------- ------------                                                                    
+             1 Chess.com                                                                       
+             2 ECF                                                                             
+             3 FIDE                                                                            
+             4 Lichess.org                                                                     
+Player                                                                                         
+------                                                                                         
+PlayerId                             Name                                                      
+------------------------------------ ------------                                              
+8b08cbd3-b21e-4fb1-a37b-0221d6846b4a John                                                      
+685f9644-6eb4-4271-833d-5798f862048c Ted                                                       
+8779d01c-daef-436e-bb68-d077a5d32d82 Janet                                                     
+cc0fe5b4-8437-4139-95c4-d8cf3698d68e Bill                                                      
+Rating                                                                                         
+------                                                                                         
+RatingId                             PlayerId                             RatingSourceId Rating RatingDate         
+------------------------------------ ------------------------------------ -------------- ------ -------------------
+ab8d68a0-a1d2-40e1-8577-165bed170212 8779d01c-daef-436e-bb68-d077a5d32d82              1   1401 27/08/2020 10:20:31
+dfb5c230-0ae5-4d5d-a9f6-505044981fac cc0fe5b4-8437-4139-95c4-d8cf3698d68e              4   1992 27/08/2020 10:21:08
+54fb3eaf-cbc2-4f5d-bc4b-9f6248f558b4 8b08cbd3-b21e-4fb1-a37b-0221d6846b4a              4   1216 27/08/2020 10:20:32
+57cadf56-2f5d-4f07-bb4b-ad3bce9c1c0a 8779d01c-daef-436e-bb68-d077a5d32d82              4   1642 27/08/2020 10:20:31
+8af1d3af-cde6-419f-9b1d-bf3deee4b563 685f9644-6eb4-4271-833d-5798f862048c              1   1836 27/08/2020 10:21:08
+3c804483-31e9-4296-b63b-ca8ef6c94427 cc0fe5b4-8437-4139-95c4-d8cf3698d68e              1   1801 27/08/2020 10:21:08
+88ed59d7-40d4-471f-bae6-fe7d7986b700 685f9644-6eb4-4271-833d-5798f862048c              4   1918 27/08/2020 10:21:08
+RatingSource                                                                                   
+------------                                                                                   
+RatingSourceId Name                                                                            
+-------------- ------------                                                                    
+             1 Chess.com                                                                       
+             2 ECF                                                                             
+             3 FIDE                                                                            
+             4 Lichess.org                                                                     
+Player                                                                                         
+------                                                                                         
+Difference PlayerId                                                                            
+---------- ------------------------------------                                                
+Inserted   685f9644-6eb4-4271-833d-5798f862048c                                                
+Inserted   cc0fe5b4-8437-4139-95c4-d8cf3698d68e                                                
+                                                                                               
+Rating                                                                                         
+------                                                                                         
+Difference RatingId                                                                            
+---------- ------------------------------------                                                
+Inserted   3c804483-31e9-4296-b63b-ca8ef6c94427                                                
+Inserted   88ed59d7-40d4-471f-bae6-fe7d7986b700                                                
+Inserted   8af1d3af-cde6-419f-9b1d-bf3deee4b563                                                
+Inserted   dfb5c230-0ae5-4d5d-a9f6-505044981fac                                                
+                                                                                               

@@ -1,0 +1,4 @@
+# Ignore local configuration file and generated class
+Config.cs
+Testing.Config.xml
+Testing.Config.bacpac

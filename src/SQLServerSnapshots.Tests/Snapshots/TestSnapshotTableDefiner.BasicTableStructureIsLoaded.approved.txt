@@ -1,0 +1,8 @@
+Tables Defined                                                                                 
+--------------                                                                                 
+Table     Primary Compare                                                                      
+Name      Key     Key                                                                          
+--------- ------- -------                                                                      
+A_Main    MainId                                                                               
+B_Related BId                                                                                  
+                                                                                               

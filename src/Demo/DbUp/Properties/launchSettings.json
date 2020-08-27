@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "DbUp": {
+      "commandName": "Project",
+      "commandLineArgs": "create localhost TestDb -r"
+    }
+  }
+}

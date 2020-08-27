@@ -1,0 +1,20 @@
+[SqlServerSnapshots.Tests].[Test]                                                              
+---------------------------------                                                              
+Table                                                                                          
+Name                                                                                           
+-----                                                                                          
+A                                                                                              
+                                                                                               
+                In                                                                             
+                Primary                                                                        
+    Name        Key                                                                            
+    ----------- -------                                                                        
+    Id          True                                                                           
+    Name        False                                                                          
+    CreatedDate False                                                                          
+                                                                                               
+    Referencing       Referenced                                                               
+    Columns     Table Columns                                                                  
+    ----------- ----- ----------                                                               
+                                                                                               
+                                                                                               

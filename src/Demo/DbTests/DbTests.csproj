@@ -1,0 +1,75 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="TestConfiguration\Config.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Config.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.4861.1-preview" />
+    <PackageReference Include="Respawn" Version="3.3.0" />
+    <PackageReference Include="SnapshotTests" Version="0.2.0-beta" />
+    <PackageReference Include="TestConsole" Version="2.3.3-beta" />
+    <PackageReference Include="xunit" Version="2.4.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <PackageReference Include="coverlet.collector" Version="1.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SQLServerSnapshots\SQLServerSnapshots.csproj" />
+    <ProjectReference Include="..\DemoDbLib\DemoDbLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="TestConfiguration\Config.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Config.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="TestConfiguration\Config.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Config.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <!--Added to enable the config template to be generated on build-->
+  <ItemGroup>
+    <None Update="ConfigurationInfo\EnvironmentTemplate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>EnvironmentTemplate.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TestConfiguration\ChessSchemaConfig\" />
+  </ItemGroup>
+  
+  <PropertyGroup>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+
+  <Import Project="$(VSToolsPath)\TextTemplating\Microsoft.TextTemplating.targets" />
+  <PropertyGroup>
+    <TransformOnBuild>true</TransformOnBuild>
+    <TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+  </PropertyGroup>
+  <!--Added to enable the config template to be generated on build-->
+
+
+</Project>
