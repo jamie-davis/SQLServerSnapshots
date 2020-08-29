@@ -50,5 +50,17 @@ namespace SQLServerSnapshots
         {
             _collection.GetSnapshotReport(name, output, tables);
         }
+
+        public TableDefiner DefineTable(string tableName)
+        {
+            return _collection.DefineTable(tableName);
+        }
+
+        public void GetSchemaReport(Output output)
+        {
+            ConfigureCollection();
+            _collection.GetSchemaReport(output);
+        }
+
     }
 }

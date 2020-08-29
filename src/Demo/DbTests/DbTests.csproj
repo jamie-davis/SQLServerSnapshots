@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TestConfiguration\ChessSchemaConfig\**" />
+    <EmbeddedResource Remove="TestConfiguration\ChessSchemaConfig\**" />
+    <None Remove="TestConfiguration\ChessSchemaConfig\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="TestConfiguration\Config.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -18,7 +24,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.4861.1-preview" />
     <PackageReference Include="Respawn" Version="3.3.0" />
-    <PackageReference Include="SnapshotTests" Version="0.2.0-beta" />
+    <PackageReference Include="SnapshotTests" Version="0.3.0-beta" />
     <PackageReference Include="TestConsole" Version="2.3.3-beta" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -55,9 +61,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EnvironmentTemplate.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TestConfiguration\ChessSchemaConfig\" />
   </ItemGroup>
   
   <PropertyGroup>
