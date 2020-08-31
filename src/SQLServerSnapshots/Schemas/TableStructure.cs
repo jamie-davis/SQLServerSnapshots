@@ -9,7 +9,7 @@ namespace SQLServerSnapshots.Schemas
     {
         public TableStructure(Table table, List<ColumnInfo> columns, IEnumerable<Reference> foreignKeys)
         {
-            Name = table.Name;
+            Name = $"[{table.Schema}].[{table.Name}]";
             Columns = columns;
             References = foreignKeys.ToList();
         }

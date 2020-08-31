@@ -17,7 +17,7 @@ namespace SQLServerSnapshots.Snapshots
                 {
                     using (var conn = new SqlConnection(connectionString))
                     {
-                        using (var command = new SqlCommand($"SELECT * FROM [{schema.Schema}].[{table.Name}]"))
+                        using (var command = new SqlCommand($"SELECT * FROM {table.Name}"))
                         {
                             command.Connection = conn;
                             conn.Open();

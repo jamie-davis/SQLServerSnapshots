@@ -54,7 +54,7 @@ GO
 
             //Assert
             var output = new Output();
-            collection.GetSchemaReport(output);
+            collection.GetSchemaReport(output, true);
             output.Report.Verify();
         }
     }

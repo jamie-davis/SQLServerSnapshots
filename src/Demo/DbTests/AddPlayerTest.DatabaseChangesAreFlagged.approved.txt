@@ -1,24 +1,25 @@
 Tables Defined                                                                                 
 --------------                                                                                 
-                                             Compare                                           
-Table Name   Primary Key                     Key                                               
------------- ------------------------------- -------                                           
-Player       PlayerId + PlayerId                                                               
-Rating       RatingId + RatingId                                                               
-RatingSource RatingSourceId + RatingSourceId                                                   
-Player                                                                                         
-------                                                                                         
-Difference PlayerId                                                                            
----------- ------------------------------------                                                
-Inserted   888c8b81-d202-481c-99ec-5d4b46bdeb70                                                
-Inserted   c3e8cb1f-66a9-476b-b6fa-f0bf5fbd3de8                                                
+                                      Compare                                                  
+Table Name             Primary Key    Key                                                      
+---------------------- -------------- -------                                                  
+[Chess].[Player]       PlayerId                                                                
+[Chess].[Rating]       RatingId                                                                
+[Chess].[RatingSource] RatingSourceId                                                          
                                                                                                
-Rating                                                                                         
-------                                                                                         
+[Chess].[Player]                                                                               
+----------------                                                                               
+Difference PlayerId                                                                            
+---------- ----------                                                                          
+Inserted   PlayerId-1                                                                          
+Inserted   PlayerId-2                                                                          
+                                                                                               
+[Chess].[Rating]                                                                               
+----------------                                                                               
 Difference RatingId                                                                            
----------- ------------------------------------                                                
-Inserted   31aad70f-50c5-4af6-afd3-83ea8b7966b1                                                
-Inserted   3ad5b4a7-d70e-4844-a209-1a26969413b7                                                
-Inserted   687e805a-e86e-4af5-9397-1305d306e013                                                
-Inserted   7735f93c-8b38-4a72-aa1f-46270acbe1e6                                                
+---------- ----------                                                                          
+Inserted   RatingId-1                                                                          
+Inserted   RatingId-2                                                                          
+Inserted   RatingId-3                                                                          
+Inserted   RatingId-4                                                                          
                                                                                                

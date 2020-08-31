@@ -1,0 +1,13 @@
+Table Definitions                                                                              
+-----------------                                                                              
+Table Name                                                                                     
+--------------                                                                                 
+[Test].[AMain]                                                                                 
+                                                                                               
+           Is      Is                                                    Referenced            
+           Primary Compare Is            Is          Is       Referenced Property              
+    Name   Key     Key     Unpredictable Predictable Required Table Name Name                  
+    ------ ------- ------- ------------- ----------- -------- ---------- ----------            
+    MainId False   False   False         True        False                                     
+                                                                                               
+                                                                                               

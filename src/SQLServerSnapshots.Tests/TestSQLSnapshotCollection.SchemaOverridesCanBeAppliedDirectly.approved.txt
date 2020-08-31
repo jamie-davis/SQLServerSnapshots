@@ -8,7 +8,7 @@ Table Name
            Primary Compare Is            Is          Is       Referenced Property              
     Name   Key     Key     Unpredictable Predictable Required Table Name Name                  
     ------ ------- ------- ------------- ----------- -------- ---------- ----------            
-    MainId True    False   True          False       False                                     
+    MainId True    False   False         True        False                                     
                                                                                                
 Table Name                                                                                     
 ------------------                                                                             

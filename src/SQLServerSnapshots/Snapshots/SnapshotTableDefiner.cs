@@ -17,6 +17,8 @@ namespace SQLServerSnapshots.Snapshots
                 foreach (var column in table.Columns.Where(c => c.InPrimaryKey))
                 {
                     tableDef.PrimaryKey(column.Name);
+                    if (column.IsUnpredictable)
+                        tableDef.IsUnpredictable(column.Name);
                 }
             }
         }

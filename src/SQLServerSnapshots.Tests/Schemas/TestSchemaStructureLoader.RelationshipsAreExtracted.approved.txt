@@ -1,9 +1,8 @@
 [SqlServerSnapshots.Tests].[Test]                                                              
 ---------------------------------                                                              
-Table                                                                                          
-Name                                                                                           
----------                                                                                      
-A_Main                                                                                         
+Table Name                                                                                     
+------------------                                                                             
+[Test].[A_Main]                                                                                
                                                                                                
                 In                                                                             
                 Primary                                                                        
@@ -17,10 +16,9 @@ A_Main
     Columns     Table Columns                                                                  
     ----------- ----- ----------                                                               
                                                                                                
-Table                                                                                          
-Name                                                                                           
----------                                                                                      
-B_Related                                                                                      
+Table Name                                                                                     
+------------------                                                                             
+[Test].[B_Related]                                                                             
                                                                                                
            In                                                                                  
            Primary                                                                             

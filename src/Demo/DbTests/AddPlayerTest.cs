@@ -47,6 +47,7 @@ namespace DbTests
             //Assert
             var output = new Output();
             collection.GetSchemaReport(output);
+            output.WriteLine();
             collection.ReportChanges("before", "after", output);
             output.Report.Verify();
         }

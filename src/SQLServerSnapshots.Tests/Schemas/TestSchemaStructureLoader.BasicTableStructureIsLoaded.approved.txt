@@ -1,9 +1,8 @@
 [SqlServerSnapshots.Tests].[Test]                                                              
 ---------------------------------                                                              
-Table                                                                                          
-Name                                                                                           
------                                                                                          
-A                                                                                              
+Table Name                                                                                     
+----------                                                                                     
+[Test].[A]                                                                                     
                                                                                                
                 In                                                                             
                 Primary                                                                        
