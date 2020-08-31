@@ -129,6 +129,7 @@ GO
             [InlineData("DATETIMEOFFSET DEFAULT(SYSDATETIMEOFFSET())", true)]
             [InlineData("DATETIMEOFFSET DEFAULT(SYSUTCDATETIME())", true)]
             [InlineData("DATETIMEOFFSET", false)]
+            [InlineData("DATETIME DEFAULT('2020-08-31 12:04')", false)]
             public void DefaultedDateValuesAreUnpredictable(string fieldDef, bool shouldBeUnpredictable)
             {
                 //Arrange

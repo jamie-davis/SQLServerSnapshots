@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.SqlServer.Management.Smo;
 using SnapshotTests;
 using SnapshotTests.Snapshots;
+using SQLServerSnapshots.Exceptions;
 using SQLServerSnapshots.Schemas;
 using SQLServerSnapshots.Snapshots;
 using TestConsoleLib;
@@ -66,6 +67,9 @@ namespace SQLServerSnapshots
 
         public TableDefiner DefineTable(string tableName)
         {
+            if (_collection != null)
+                throw new ConfigurationCannotBeChangedException();
+
             ConfigureCollection();
             return _collection.DefineTable(tableName);
         }
@@ -83,11 +87,15 @@ namespace SQLServerSnapshots
 
         public void LoadSchemaOverrides(Type containerType)
         {
+            if (_collection != null)
+                throw new ConfigurationCannotBeChangedException();
             _overrides.Add(SnapshotDefinitionLoader.Load(containerType));
         }
 
         public void LoadSchemaOverrides(Assembly assembly)
         {
+            if (_collection != null)
+                throw new ConfigurationCannotBeChangedException();
             _overrides.Add(SnapshotDefinitionLoader.Load(assembly));
         }
     }

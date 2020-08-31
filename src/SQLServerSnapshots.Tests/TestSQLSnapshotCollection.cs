@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using FluentAssertions;
 using SnapshotTests;
+using SQLServerSnapshots.Exceptions;
 using SQLServerSnapshots.Schemas;
 using SQLServerSnapshots.Snapshots;
 using SQLServerSnapshots.Tests.Configuration;
@@ -32,6 +34,9 @@ CONSTRAINT fk_B_MainId
     FOREIGN KEY (MainId)
     REFERENCES [Test].[A_Main] (MainId)
 );
+GO
+INSERT INTO [Test].[A_Main] (Name, CreatedDate)
+VALUES ('Test Row', '2020-08-31 12:01')
 GO
 ";
     
@@ -81,6 +86,67 @@ GO
             //Assert
             var output = new Output();
             collection.GetSchemaReport(output, true);
+            output.Report.Verify();
+        }
+
+        [Fact]
+        public void SchemaOverridesCannotBeAppliedAfterSnapshot()
+        {
+            //Arrange
+            var collection = new SqlSnapshotCollection();
+            collection.ConfigureSchema(DbController.Server, DbController.TestDbName, "Test");
+            collection.Snapshot(DbController.ConnectionString, "Test");
+
+            //Act
+            Action action = () => collection.DefineTable("[Test].[A_Main]").IsPredictable("MainId");
+
+            //Assert
+            action.Should().Throw<ConfigurationCannotBeChangedException>();
+        }
+
+        [Fact]
+        public void SchemaOverridesCannotBeLoadedAfterSnapshot()
+        {
+            //Arrange
+            var collection = new SqlSnapshotCollection();
+            collection.ConfigureSchema(DbController.Server, DbController.TestDbName, "Test");
+            collection.Snapshot(DbController.ConnectionString, "Test");
+
+            //Act
+            Action action = () => collection.LoadSchemaOverrides(GetType());
+
+            //Assert
+            action.Should().Throw<ConfigurationCannotBeChangedException>();
+        }
+
+        [Fact]
+        public void SchemaOverridesCannotBeLoadedFromAssemblyAfterSnapshot()
+        {
+            //Arrange
+            var collection = new SqlSnapshotCollection();
+            collection.ConfigureSchema(DbController.Server, DbController.TestDbName, "Test");
+            collection.Snapshot(DbController.ConnectionString, "Test");
+
+            //Act
+            Action action = () => collection.LoadSchemaOverrides(GetType().Assembly);
+
+            //Assert
+            action.Should().Throw<ConfigurationCannotBeChangedException>();
+        }
+
+        [Fact]
+        public void SnapshotReportCanBeExtracted()
+        {
+            //Arrange
+            var collection = new SqlSnapshotCollection();
+            collection.ConfigureSchema(DbController.Server, DbController.TestDbName, "Test");
+            collection.Snapshot(DbController.ConnectionString, "Test");
+
+            //Act
+            var output = new Output();
+            collection.GetSnapshotReport("Test", output);
+
+            //Assert
             output.Report.Verify();
         }
 

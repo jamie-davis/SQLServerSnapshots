@@ -19,7 +19,7 @@ namespace SQLServerSnapshots.Schemas
                 case SqlDataType.DateTimeOffset:
                     if (column.DefaultConstraint != null)
                     {
-                        return IsCurrentTimeDefaul(column.DefaultConstraint);
+                        return IsCurrentTimeDefault(column.DefaultConstraint);
                     }
 
                     break;
@@ -27,7 +27,7 @@ namespace SQLServerSnapshots.Schemas
             return column.Identity || column.DataType.SqlDataType == SqlDataType.UniqueIdentifier;
         }
 
-        private static bool IsCurrentTimeDefaul(DefaultConstraint constraint)
+        private static bool IsCurrentTimeDefault(DefaultConstraint constraint)
         {
             var text = constraint.Text;
             switch (text)

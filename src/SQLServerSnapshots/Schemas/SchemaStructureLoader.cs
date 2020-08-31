@@ -2,6 +2,7 @@
 using System.Data;
 using System.Linq;
 using Microsoft.SqlServer.Management.Smo;
+using SQLServerSnapshots.Exceptions;
 using SQLServerSnapshots.Utilities;
 
 namespace SQLServerSnapshots.Schemas
@@ -12,7 +13,8 @@ namespace SQLServerSnapshots.Schemas
         {
             var srv = new Server(server);
             var database = srv.Databases[databaseName];
-            if (database == null) return null;
+            if (database == null) 
+                throw new DatabaseNotFoundException(server, databaseName);
 
             var tableDetails = database.Tables()
                 .Where(t => !t.IsSystemObject && t.Schema == schema)

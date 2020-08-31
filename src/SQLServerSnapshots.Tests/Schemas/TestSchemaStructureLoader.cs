@@ -1,4 +1,7 @@
+using System;
 using System.ComponentModel;
+using FluentAssertions;
+using SQLServerSnapshots.Exceptions;
 using SQLServerSnapshots.Schemas;
 using SQLServerSnapshots.Tests.Configuration;
 using TestConsoleLib;
@@ -75,6 +78,19 @@ GO
             var output = new Output();
             result.Report(output);
             output.Report.Verify();
+        }
+
+        [Fact]
+        public void InvalidDatabaseNameThrows()
+        {
+            //Arrange
+            DbController.Run(CreateTables);
+
+            //Act
+            Action action = () => SchemaStructureLoader.Load(DbController.Server, "Wrong", "Test");
+
+            //Assert
+            action.Should().Throw<DatabaseNotFoundException>().Where(e => e.Server == DbController.Server && e.Database == "Wrong");
         }
 
         [Fact]
