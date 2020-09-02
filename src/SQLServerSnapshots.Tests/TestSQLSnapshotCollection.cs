@@ -42,7 +42,7 @@ GO
     
         #region Types configuring test schema overrides
 
-        [SnapshotDefinition("[Test].[AMain]")]
+        [SnapshotDefinition("[Test].[A_Main]")]
         public static class AMain
         {
             [Predictable]

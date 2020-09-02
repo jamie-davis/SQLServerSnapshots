@@ -1,15 +1,27 @@
 Table Definitions                                                                              
 -----------------                                                                              
-               Exclude               Defined                                                   
-               From       Include In By                                                        
-Table Name     Comparison Comparison Types                                                     
--------------- ---------- ---------- -------                                                   
-[Test].[AMain] False      False      AMain                                                     
+                   Exclude               Defined                                               
+                   From       Include In By                                                    
+Table Name         Comparison Comparison Types                                                 
+------------------ ---------- ---------- -------                                               
+[Test].[A_Main]    False      False      AMain                                                 
                                                                                                
            Is      Is                                                    Referenced            
            Primary Compare Is            Is          Is       Referenced Property              
     Name   Key     Key     Unpredictable Predictable Required Table Name Name                  
     ------ ------- ------- ------------- ----------- -------- ---------- ----------            
-    MainId False   False   False         True        False                                     
+    MainId True    False   False         False       False                                     
+                                                                                               
+                   Exclude               Defined                                               
+                   From       Include In By                                                    
+Table Name         Comparison Comparison Types                                                 
+------------------ ---------- ---------- -------                                               
+[Test].[B_Related] False      False                                                            
+                                                                                               
+         Is      Is                                                    Referenced              
+         Primary Compare Is            Is          Is       Referenced Property                
+    Name Key     Key     Unpredictable Predictable Required Table Name Name                    
+    ---- ------- ------- ------------- ----------- -------- ---------- ----------              
+    BId  True    False   True          False       False                                       
                                                                                                
                                                                                                

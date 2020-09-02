@@ -18,12 +18,12 @@ namespace SQLServerSnapshots.Snapshots
                 foreach (var table in schema.Tables)
                 {
                     var definition = snapshotCollection.GetTableDefinition(table.Name);
-                    if (definition.ExcludeFromComparison)
+                    if (definition?.ExcludeFromComparison ?? false)
                         continue;
 
                     using (var conn = new SqlConnection(connectionString))
                     {
-                        using (var command = new SqlCommand($"SELECT * FROM {table.Name}"))
+                        using (var command = new SqlCommand(SnapshotTableSelectBuilder.Build(table, definition)))
                         {
                             command.Connection = conn;
                             conn.Open();

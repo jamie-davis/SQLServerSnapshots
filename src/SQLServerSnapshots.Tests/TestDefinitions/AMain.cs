@@ -2,7 +2,7 @@
 
 namespace SQLServerSnapshots.Tests.TestDefinitions
 {
-    [SnapshotDefinition("[Test].[AMain]")]
+    [SnapshotDefinition("[Test].[A_Main]")]
     public static class AMain
     {
         [Predictable]

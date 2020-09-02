@@ -12,6 +12,17 @@ namespace SQLServerSnapshots.Tests.Snapshots
 {
     public class TestDbSnapshotMaker
     {
+        #region Definitions
+
+        [SnapshotDefinition("[Test].[B_Related]")]
+        [CustomWhereClause(@"WHERE [Name] LIKE 'First%'")]
+        public static class B_RelatedConfig
+        {
+
+        }
+
+        #endregion
+
         private const string CreateRelatedTables =
             @"
 CREATE SCHEMA Test;
@@ -82,6 +93,26 @@ GO
             var builder = collection.NewSnapshot("Test");
             SnapshotTableDefiner.Define(collection, schema);
             collection.DefineTable("[Test].[B_Related]").ExcludeFromComparison();
+
+            //Act
+            DbSnapshotMaker.Make(DbController.ConnectionString, builder, new [] { schema }, collection);
+
+            //Assert
+            var output = new Output();
+            collection.GetSnapshotReport("Test", output);
+            output.Report.Verify();
+        }
+
+        [Fact]
+        public void CustomWhereClauseIsLoadedFromDefinition()
+        {
+            //Arrange
+            var collection = new SnapshotCollection();
+            var schema = SchemaStructureLoader.Load(DbController.Server, DbController.TestDbName, "Test");
+            var builder = collection.NewSnapshot("Test");
+            SnapshotTableDefiner.Define(collection, schema);
+            var definitions = SnapshotDefinitionLoader.Load(GetType());
+            collection.ApplyDefinitions(definitions);
 
             //Act
             DbSnapshotMaker.Make(DbController.ConnectionString, builder, new [] { schema }, collection);
