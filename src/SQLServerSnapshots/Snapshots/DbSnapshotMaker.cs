@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Data.SqlClient;
+using SnapshotTests;
 using SnapshotTests.Snapshots;
 using SQLServerSnapshots.Schemas;
 
@@ -8,13 +9,18 @@ namespace SQLServerSnapshots.Snapshots
 {
     internal static class DbSnapshotMaker
     {
-        public static void Make(string connectionString, SnapshotBuilder builder, IEnumerable<SchemaStructure> schemas)
+        public static void Make(string connectionString, SnapshotBuilder builder, IEnumerable<SchemaStructure> schemas,
+            SnapshotCollection snapshotCollection)
         {
             var schemasOrdered = schemas.OrderBy(s => s.Name);
             foreach (var schema in schemasOrdered)
             {
                 foreach (var table in schema.Tables)
                 {
+                    var definition = snapshotCollection.GetTableDefinition(table.Name);
+                    if (definition.ExcludeFromComparison)
+                        continue;
+
                     using (var conn = new SqlConnection(connectionString))
                     {
                         using (var command = new SqlCommand($"SELECT * FROM {table.Name}"))

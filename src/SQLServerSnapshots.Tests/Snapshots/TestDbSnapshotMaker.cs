@@ -56,7 +56,7 @@ GO
         }
 
         [Fact]
-        public void BasicTableStructureIsLoaded()
+        public void TableContentsAreAddedToSnapshot()
         {
             //Arrange
             var collection = new SnapshotCollection();
@@ -65,7 +65,26 @@ GO
             SnapshotTableDefiner.Define(collection, schema);
 
             //Act
-            DbSnapshotMaker.Make(DbController.ConnectionString, builder, new [] { schema });
+            DbSnapshotMaker.Make(DbController.ConnectionString, builder, new [] { schema }, collection);
+
+            //Assert
+            var output = new Output();
+            collection.GetSnapshotReport("Test", output);
+            output.Report.Verify();
+        }
+
+        [Fact]
+        public void ExcludedTablesAreNotAddedToSnapshot()
+        {
+            //Arrange
+            var collection = new SnapshotCollection();
+            var schema = SchemaStructureLoader.Load(DbController.Server, DbController.TestDbName, "Test");
+            var builder = collection.NewSnapshot("Test");
+            SnapshotTableDefiner.Define(collection, schema);
+            collection.DefineTable("[Test].[B_Related]").ExcludeFromComparison();
+
+            //Act
+            DbSnapshotMaker.Make(DbController.ConnectionString, builder, new [] { schema }, collection);
 
             //Assert
             var output = new Output();

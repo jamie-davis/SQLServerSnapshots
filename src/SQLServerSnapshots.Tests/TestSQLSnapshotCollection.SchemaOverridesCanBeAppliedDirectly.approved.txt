@@ -1,8 +1,10 @@
 Table Definitions                                                                              
 -----------------                                                                              
-Table Name                                                                                     
-------------------                                                                             
-[Test].[A_Main]                                                                                
+                   Exclude               Defined                                               
+                   From       Include In By                                                    
+Table Name         Comparison Comparison Types                                                 
+------------------ ---------- ---------- -------                                               
+[Test].[A_Main]    False      False                                                            
                                                                                                
            Is      Is                                                    Referenced            
            Primary Compare Is            Is          Is       Referenced Property              
@@ -10,9 +12,11 @@ Table Name
     ------ ------- ------- ------------- ----------- -------- ---------- ----------            
     MainId True    False   False         True        False                                     
                                                                                                
-Table Name                                                                                     
-------------------                                                                             
-[Test].[B_Related]                                                                             
+                   Exclude               Defined                                               
+                   From       Include In By                                                    
+Table Name         Comparison Comparison Types                                                 
+------------------ ---------- ---------- -------                                               
+[Test].[B_Related] False      False                                                            
                                                                                                
          Is      Is                                                    Referenced              
          Primary Compare Is            Is          Is       Referenced Property                

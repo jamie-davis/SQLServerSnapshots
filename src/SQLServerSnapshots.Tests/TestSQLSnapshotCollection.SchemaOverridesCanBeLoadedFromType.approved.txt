@@ -1,8 +1,10 @@
 Table Definitions                                                                              
 -----------------                                                                              
-Table Name                                                                                     
---------------                                                                                 
-[Test].[AMain]                                                                                 
+               Exclude               Defined                                                   
+               From       Include In By                                                        
+Table Name     Comparison Comparison Types                                                     
+-------------- ---------- ---------- -------                                                   
+[Test].[AMain] False      False      AMain                                                     
                                                                                                
            Is      Is                                                    Referenced            
            Primary Compare Is            Is          Is       Referenced Property              

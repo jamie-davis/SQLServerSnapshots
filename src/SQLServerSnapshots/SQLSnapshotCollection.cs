@@ -27,7 +27,7 @@ namespace SQLServerSnapshots
         {
             ConfigureCollection();
             var builder = _collection.NewSnapshot(snapshotName);
-            DbSnapshotMaker.Make(connectionString, builder, _schemas.Values);
+            DbSnapshotMaker.Make(connectionString, builder, _schemas.Values, _collection);
             return builder;
         }
 
