@@ -34,6 +34,12 @@ namespace DbTests
             //Arrange
             var collection = new SqlSnapshotCollection();
             collection.ConfigureSchema(Config.Server, Config.Database, "Chess");
+            collection.DefineTable("[Chess].[Rating]")
+                .IsUnpredictable("RatingDate")
+                .Sort("RatingDate")
+                .Sort("RatingSourceId");
+            collection.DefineTable("[Chess].[Player]")
+                .Sort("Name");
 
             var builder = collection.Snapshot(Config.ConnectionString, "before");
 
@@ -46,7 +52,7 @@ namespace DbTests
 
             //Assert
             var output = new Output();
-            collection.GetSchemaReport(output);
+            collection.GetSchemaReport(output, true);
             output.WriteLine();
             collection.ReportChanges("before", "after", output);
             output.Report.Verify();

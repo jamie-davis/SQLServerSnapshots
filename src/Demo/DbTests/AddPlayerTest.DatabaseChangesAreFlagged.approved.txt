@@ -1,25 +1,70 @@
-Tables Defined                                                                                 
---------------                                                                                 
-                                      Compare                                                  
-Table Name             Primary Key    Key                                                      
----------------------- -------------- -------                                                  
-[Chess].[Player]       PlayerId                                                                
-[Chess].[Rating]       RatingId                                                                
-[Chess].[RatingSource] RatingSourceId                                                          
+Table Definitions                                                                              
+-----------------                                                                              
+                       Exclude               Defined                                           
+                       From       Include In By                                                
+Table Name             Comparison Comparison Types                                             
+---------------------- ---------- ---------- -------                                           
+[Chess].[Player]       False      False                                                        
+                                                                                               
+             Is      Is                                                    Referenced                
+             Primary Compare Is            Is          Is       Referenced Property   Sort      Sort 
+    Name     Key     Key     Unpredictable Predictable Required Table Name Name       Direction Index
+    -------- ------- ------- ------------- ----------- -------- ---------- ---------- --------- -----
+    PlayerId True    False   True          False       False                                         
+    Name     False   False   False         False       False                          Ascending      
+                                                                                               
+                       Exclude               Defined                                           
+                       From       Include In By                                                
+Table Name             Comparison Comparison Types                                             
+---------------------- ---------- ---------- -------                                           
+[Chess].[Rating]       False      False                                                        
+                                                                                               
+                   Is      Is                                                                                      
+                   Primary Compare Is            Is          Is       Referenced     Referenced     Sort      Sort 
+    Name           Key     Key     Unpredictable Predictable Required Table Name     Property Name  Direction Index
+    -------------- ------- ------- ------------- ----------- -------- -------------- -------------- --------- -----
+    RatingId       True    False   True          False       False                                                 
+    PlayerId       False   False   False         False       False    [Chess].       PlayerId                      
+                                                                      [Player]                                     
+    RatingSourceId False   False   False         False       False    [Chess].       RatingSourceId Ascending      
+                                                                      [RatingSource]                               
+    RatingDate     False   False   True          False       False                                  Ascending      
+    Rating         False   False   False         False       False                                                 
+                                                                                               
+                       Exclude               Defined                                           
+                       From       Include In By                                                
+Table Name             Comparison Comparison Types                                             
+---------------------- ---------- ---------- -------                                           
+[Chess].[RatingSource] False      False                                                        
+                                                                                               
+                   Is      Is                                                    Referenced                
+                   Primary Compare Is            Is          Is       Referenced Property   Sort      Sort 
+    Name           Key     Key     Unpredictable Predictable Required Table Name Name       Direction Index
+    -------------- ------- ------- ------------- ----------- -------- ---------- ---------- --------- -----
+    RatingSourceId True    False   True          False       False                                         
+    Name           False   False   False         False       False                                         
+                                                                                               
                                                                                                
 [Chess].[Player]                                                                               
 ----------------                                                                               
-Difference PlayerId                                                                            
----------- ----------                                                                          
-Inserted   PlayerId-1                                                                          
-Inserted   PlayerId-2                                                                          
+Difference PlayerId   Name                                                                     
+---------- ---------- ----                                                                     
+Inserted   PlayerId-1 Bill                                                                     
+Inserted   PlayerId-2 Ted                                                                      
                                                                                                
 [Chess].[Rating]                                                                               
 ----------------                                                                               
-Difference RatingId                                                                            
----------- ----------                                                                          
-Inserted   RatingId-1                                                                          
-Inserted   RatingId-2                                                                          
-Inserted   RatingId-3                                                                          
-Inserted   RatingId-4                                                                          
+Difference RatingId   PlayerId   RatingSourceId   RatingDate   Rating                          
+---------- ---------- ---------- ---------------- ------------ ------                          
+Inserted   RatingId-1 PlayerId-1 RatingSourceId-1 RatingDate-1 1801                            
+Inserted   RatingId-2 PlayerId-1 RatingSourceId-2 RatingDate-1 1992                            
+Inserted   RatingId-3 PlayerId-2 RatingSourceId-1 RatingDate-2 1836                            
+Inserted   RatingId-4 PlayerId-2 RatingSourceId-2 RatingDate-2 1918                            
+                                                                                               
+[Chess].[RatingSource]                                                                         
+----------------------                                                                         
+Difference RatingSourceId   Name                                                               
+---------- ---------------- -----------                                                        
+Reference  RatingSourceId-1 Chess.com                                                          
+Reference  RatingSourceId-2 Lichess.org                                                        
                                                                                                

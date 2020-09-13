@@ -12,11 +12,29 @@ using TestConsoleLib;
 
 namespace SQLServerSnapshots
 {
+    /// <summary>
+    /// Container for SQL Server snapshots.
+    /// <para/>
+    /// After creating an instance of this class, it needs to be initialised with schema information using <see cref="ConfigureSchema"/>. This will
+    /// analyse the tables in the database in the specified schema and configure the collection to accept snapshot data.
+    /// <para/>
+    /// If required, additional configuration can be loaded from configuration classes using the <see cref="LoadSchemaOverrides(Type)"/> or <see cref="LoadSchemaOverrides(Assembly)"/> overloads,
+    /// or via calls to <see cref="DefineTable"/>.
+    /// <para/>
+    /// Once configuration is loaded, <see cref="Snapshot"/> can be used to store the database state. <see cref="ReportChanges"/> can be used to generate a difference report which can be
+    /// verified.
+    /// <para/>
+    /// Note that once a snapshot is taken, the configuration cannot be changed further. Additionally, once calls are made to <see cref="DefineTable"/>, it is no longer possible to load schema
+    /// information or overrides. This is because the schema configuration and overrides are merged in order to allow <see cref="DefineTable"/> to change the configuration, and this can only
+    /// be done once.
+    /// </summary>
     public class SqlSnapshotCollection
     {
+        private object _lock = new object();
         private SnapshotCollection _collection;
         private readonly Dictionary<string, SchemaStructure> _schemas = new Dictionary<string, SchemaStructure>();
         private readonly List<DefinitionSet> _overrides = new List<DefinitionSet>();
+        private bool _snapshotTaken;
 
         public void ConfigureSchema(string server, string database, string schema)
         {
@@ -25,10 +43,14 @@ namespace SQLServerSnapshots
 
         public SnapshotBuilder Snapshot(string connectionString, string snapshotName)
         {
-            ConfigureCollection();
-            var builder = _collection.NewSnapshot(snapshotName);
-            DbSnapshotMaker.Make(connectionString, builder, _schemas.Values, _collection);
-            return builder;
+            lock (_lock)
+            {
+                ConfigureCollection();
+                var builder = _collection.NewSnapshot(snapshotName);
+                DbSnapshotMaker.Make(connectionString, builder, _schemas.Values, _collection);
+                _snapshotTaken = true;
+                return builder;
+            }
         }
 
         private void ConfigureCollection()
@@ -55,48 +77,68 @@ namespace SQLServerSnapshots
 
         public void ReportChanges(string before, string after, Output output)
         {
-            ConfigureCollection();
-            _collection.ReportChanges(before, after, output);
+            lock (_lock)
+            {
+                ConfigureCollection();
+                _collection.ReportChanges(before, after, output);
+            }
         }
 
         public void GetSnapshotReport(string name, Output output, params string[] tables)
         {
-            ConfigureCollection();
-            _collection.GetSnapshotReport(name, output, tables);
+            lock (_lock)
+            {
+                ConfigureCollection();
+                _collection.GetSnapshotReport(name, output, tables);
+            }
         }
 
         public TableDefiner DefineTable(string tableName)
         {
-            if (_collection != null)
-                throw new ConfigurationCannotBeChangedException();
+            lock (_lock)
+            {
+                if (_snapshotTaken)
+                    throw new ConfigurationCannotBeChangedException();
 
-            ConfigureCollection();
-            return _collection.DefineTable(tableName);
+                if (_collection == null)
+                    ConfigureCollection();
+                return _collection.DefineTable(tableName);
+            }
         }
 
         public void GetSchemaReport(Output output, bool verbose = false)
         {
-            var collection = _collection;
-            if (collection == null)
+            lock (_lock)
             {
-                collection = new SnapshotCollection();
-                ApplyConfig(collection);                
+                var collection = _collection;
+                if (collection == null)
+                {
+                    collection = new SnapshotCollection();
+                    ApplyConfig(collection);
+                }
+
+                collection.GetSchemaReport(output, verbose);
             }
-            collection.GetSchemaReport(output, verbose);
         }
 
         public void LoadSchemaOverrides(Type containerType)
         {
-            if (_collection != null)
-                throw new ConfigurationCannotBeChangedException();
-            _overrides.Add(SnapshotDefinitionLoader.Load(containerType));
+            lock (_lock)
+            {
+                if (_collection != null)
+                    throw new ConfigurationCannotBeChangedException();
+                _overrides.Add(SnapshotDefinitionLoader.Load(containerType));
+            }
         }
 
         public void LoadSchemaOverrides(Assembly assembly)
         {
-            if (_collection != null)
-                throw new ConfigurationCannotBeChangedException();
-            _overrides.Add(SnapshotDefinitionLoader.Load(assembly));
+            lock (_lock)
+            {
+                if (_collection != null)
+                    throw new ConfigurationCannotBeChangedException();
+                _overrides.Add(SnapshotDefinitionLoader.Load(assembly));
+            }
         }
     }
 }

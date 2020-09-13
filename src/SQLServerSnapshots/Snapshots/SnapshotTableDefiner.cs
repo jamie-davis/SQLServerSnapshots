@@ -20,6 +20,11 @@ namespace SQLServerSnapshots.Snapshots
                     if (column.IsUnpredictable)
                         tableDef.IsUnpredictable(column.Name);
                 }
+
+                foreach (var reference in table.References)
+                {
+                    tableDef.IsReference(reference.ReferencingColumnNames.First(), $"[{reference.ReferencedSchema}].[{reference.ReferencedTable}]", reference.ReferencedColumnNames.First());
+                }
             }
         }
     }
