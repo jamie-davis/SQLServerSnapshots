@@ -61,8 +61,8 @@ GO
         public void SchemaOverridesCanBeLoadedFromType()
         {
             //Arrange
-            var collection = new SqlSnapshotCollection();
-            collection.ConfigureSchema(DbController.Server, DbController.TestDbName, "Test");
+            var collection = new SqlSnapshotCollection(DbController.ConnectionString);
+            collection.ConfigureSchema("Test");
 
             //Act
             collection.LoadSchemaOverrides(GetType());
@@ -77,8 +77,8 @@ GO
         public void SchemaOverridesCanBeLoadedFromAssembly()
         {
             //Arrange
-            var collection = new SqlSnapshotCollection();
-            collection.ConfigureSchema(DbController.Server, DbController.TestDbName, "Test");
+            var collection = new SqlSnapshotCollection(DbController.ConnectionString);
+            collection.ConfigureSchema("Test");
 
             //Act
             collection.LoadSchemaOverrides(GetType().Assembly);
@@ -93,9 +93,9 @@ GO
         public void SchemaOverridesCannotBeAppliedAfterSnapshot()
         {
             //Arrange
-            var collection = new SqlSnapshotCollection();
-            collection.ConfigureSchema(DbController.Server, DbController.TestDbName, "Test");
-            collection.Snapshot(DbController.ConnectionString, "Test");
+            var collection = new SqlSnapshotCollection(DbController.ConnectionString);
+            collection.ConfigureSchema("Test");
+            collection.Snapshot("Test");
 
             //Act
             Action action = () => collection.DefineTable("[Test].[A_Main]").IsPredictable("MainId");
@@ -108,9 +108,9 @@ GO
         public void SchemaOverridesCannotBeLoadedAfterSnapshot()
         {
             //Arrange
-            var collection = new SqlSnapshotCollection();
-            collection.ConfigureSchema(DbController.Server, DbController.TestDbName, "Test");
-            collection.Snapshot(DbController.ConnectionString, "Test");
+            var collection = new SqlSnapshotCollection(DbController.ConnectionString);
+            collection.ConfigureSchema("Test");
+            collection.Snapshot("Test");
 
             //Act
             Action action = () => collection.LoadSchemaOverrides(GetType());
@@ -123,9 +123,9 @@ GO
         public void SchemaOverridesCannotBeLoadedFromAssemblyAfterSnapshot()
         {
             //Arrange
-            var collection = new SqlSnapshotCollection();
-            collection.ConfigureSchema(DbController.Server, DbController.TestDbName, "Test");
-            collection.Snapshot(DbController.ConnectionString, "Test");
+            var collection = new SqlSnapshotCollection(DbController.ConnectionString);
+            collection.ConfigureSchema("Test");
+            collection.Snapshot("Test");
 
             //Act
             Action action = () => collection.LoadSchemaOverrides(GetType().Assembly);
@@ -138,9 +138,9 @@ GO
         public void SnapshotReportCanBeExtracted()
         {
             //Arrange
-            var collection = new SqlSnapshotCollection();
-            collection.ConfigureSchema(DbController.Server, DbController.TestDbName, "Test");
-            collection.Snapshot(DbController.ConnectionString, "Test");
+            var collection = new SqlSnapshotCollection(DbController.ConnectionString);
+            collection.ConfigureSchema("Test");
+            collection.Snapshot("Test");
 
             //Act
             var output = new Output();
@@ -154,8 +154,8 @@ GO
         public void SchemaOverridesCanBeAppliedDirectly()
         {
             //Arrange
-            var collection = new SqlSnapshotCollection();
-            collection.ConfigureSchema(DbController.Server, DbController.TestDbName, "Test");
+            var collection = new SqlSnapshotCollection(DbController.ConnectionString);
+            collection.ConfigureSchema("Test");
 
             //Act
             collection.DefineTable("[Test].[A_Main]").IsPredictable("MainId");

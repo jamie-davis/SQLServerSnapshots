@@ -9,12 +9,15 @@
     <None Remove="Scripts\2020-08-01-2038.sql" />
     <None Remove="Scripts\2020-08-02-0947.sql" />
     <None Remove="Scripts\2020-08-04-2136.sql" />
+    <None Remove="Scripts\2020-09-13-2106.sql" />
+    <None Remove="Scripts\2020-09-14-0718.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Scripts\2020-08-01-2038.sql" />
     <EmbeddedResource Include="Scripts\2020-08-02-0947.sql" />
     <EmbeddedResource Include="Scripts\2020-08-04-2136.sql" />
+    <EmbeddedResource Include="Scripts\2020-09-14-0718.sql" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,6 +25,10 @@
     <PackageReference Include="dbup-sqlserver" Version="4.4.0" />
     <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.4861.1-preview" />
     <PackageReference Include="Microsoft.SqlServer.SqlManagementObjects" Version="161.41011.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\2020-09-13-2106.sql" />
   </ItemGroup>
 
 </Project>

@@ -53,6 +53,7 @@ namespace DbTests.DataSetup
             };
             entities.Players.Add(player);
 
+            var ratingDate = DateTime.Now;
             player.Ratings = ratings.Select(rating =>
                 {
                     var ratingEntity = new Rating
@@ -61,7 +62,7 @@ namespace DbTests.DataSetup
                         Player = player,
                         PlayerRating = rating.Rating,
                         RatingSource = entities.RatingSources.First(s => s.Name == rating.Source),
-                        RatingDate = DateTime.Now
+                        RatingDate = ratingDate
                     };
 
                     entities.Ratings.Add(ratingEntity);

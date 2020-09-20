@@ -36,23 +36,11 @@
             var connectionStringElement = xDoc.Root.DescendantsAndSelf()
                 .FirstOrDefault(x => x.Name.LocalName == "ConnectionString");
 
-            var serverElement = xDoc.Root.DescendantsAndSelf()
-                .FirstOrDefault(x => x.Name.LocalName == "server");
-
-            var databaseElement = xDoc.Root.DescendantsAndSelf()
-                .FirstOrDefault(x => x.Name.LocalName == "database");
-
             if (connectionStringElement != null)
             {
                 connectionString = $@"{connectionStringElement.Value}";
                 usingDefault = false;
             }
-
-            if (serverElement != null)
-                server = $@"{serverElement.Value}";
-
-            if (databaseElement != null)
-                database = $@"{databaseElement.Value}";
         }
     }
 
@@ -71,9 +59,5 @@ namespace DbTests.TestConfiguration
 }
 #>
         public const string ConnectionString = @"<#=connectionString#>";
-
-        public const string Server = @"<#=server#>";
-
-        public const string Database = @"<#=database#>";
     }
 }

@@ -8,6 +8,7 @@ using SnapshotTests.Snapshots;
 using SQLServerSnapshots.Exceptions;
 using SQLServerSnapshots.Schemas;
 using SQLServerSnapshots.Snapshots;
+using SQLServerSnapshots.Utilities;
 using TestConsoleLib;
 
 namespace SQLServerSnapshots
@@ -30,48 +31,57 @@ namespace SQLServerSnapshots
     /// </summary>
     public class SqlSnapshotCollection
     {
+        private readonly string _connectionString;
         private object _lock = new object();
         private SnapshotCollection _collection;
         private readonly Dictionary<string, SchemaStructure> _schemas = new Dictionary<string, SchemaStructure>();
         private readonly List<DefinitionSet> _overrides = new List<DefinitionSet>();
         private bool _snapshotTaken;
-
-        public void ConfigureSchema(string server, string database, string schema)
+        private bool _collectionConfigured;
+        
+        public SqlSnapshotCollection(string connectionString)
         {
-            _schemas[schema] = SchemaStructureLoader.Load(server, database, schema);
+            _connectionString = connectionString;
+            _collection = new SnapshotCollection();
+            _collection.SetTimeSource(new SQLTimeSource(_connectionString));
         }
 
-        public SnapshotBuilder Snapshot(string connectionString, string snapshotName)
+        public void ConfigureSchema(string schema)
+        {
+            var connectionStringBuilder = new SqlConnectionStringBuilder(_connectionString);
+            _schemas[schema] = SchemaStructureLoader.Load(connectionStringBuilder.DataSource, connectionStringBuilder.InitialCatalog, schema);
+        }
+
+        public SnapshotBuilder Snapshot(string snapshotName)
         {
             lock (_lock)
             {
                 ConfigureCollection();
                 var builder = _collection.NewSnapshot(snapshotName);
-                DbSnapshotMaker.Make(connectionString, builder, _schemas.Values, _collection);
+                DbSnapshotMaker.Make(_connectionString, builder, _schemas.Values, _collection);
                 _snapshotTaken = true;
                 return builder;
             }
         }
-
         private void ConfigureCollection()
         {
-            if (_collection != null) return;
+            if (_collectionConfigured) return;
+            
+            _collectionConfigured = true;
 
-            _collection = new SnapshotCollection();
-
-            ApplyConfig(_collection);
+            ApplyConfig();
         }
 
-        private void ApplyConfig(SnapshotCollection snapshotCollection)
+        private void ApplyConfig()
         {
             foreach (var schema in _schemas.Values)
             {
-                SnapshotTableDefiner.Define(snapshotCollection, schema);
+                SnapshotTableDefiner.Define(_collection, schema);
             }
 
             foreach (var definitionSet in _overrides)
             {
-                snapshotCollection.ApplyDefinitions(definitionSet);
+                _collection.ApplyDefinitions(definitionSet);
             }
         }
 
@@ -100,7 +110,7 @@ namespace SQLServerSnapshots
                 if (_snapshotTaken)
                     throw new ConfigurationCannotBeChangedException();
 
-                if (_collection == null)
+                if (!_collectionConfigured)
                     ConfigureCollection();
                 return _collection.DefineTable(tableName);
             }
@@ -110,14 +120,8 @@ namespace SQLServerSnapshots
         {
             lock (_lock)
             {
-                var collection = _collection;
-                if (collection == null)
-                {
-                    collection = new SnapshotCollection();
-                    ApplyConfig(collection);
-                }
-
-                collection.GetSchemaReport(output, verbose);
+                ConfigureCollection();
+                _collection.GetSchemaReport(output, verbose);
             }
         }
 
@@ -125,7 +129,7 @@ namespace SQLServerSnapshots
         {
             lock (_lock)
             {
-                if (_collection != null)
+                if (_collectionConfigured)
                     throw new ConfigurationCannotBeChangedException();
                 _overrides.Add(SnapshotDefinitionLoader.Load(containerType));
             }
@@ -135,7 +139,7 @@ namespace SQLServerSnapshots
         {
             lock (_lock)
             {
-                if (_collection != null)
+                if (_collectionConfigured)
                     throw new ConfigurationCannotBeChangedException();
                 _overrides.Add(SnapshotDefinitionLoader.Load(assembly));
             }

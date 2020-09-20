@@ -10,7 +10,7 @@ Inserted   PlayerAuditId-2 PlayerId-2 AuditStartDate-2 AuditEndDate-1 Ted  I
 Difference AuditRatingId   PlayerId   RatingId   AuditStartDate   AuditEndDate   RatingDate   RatingSourceId Rating AuditStartOperation AuditEndOperation
 ---------- --------------- ---------- ---------- ---------------- -------------- ------------ -------------- ------ ------------------- -----------------
 Inserted   AuditRatingId-1 PlayerId-1 RatingId-1 AuditStartDate-1 AuditEndDate-1 RatingDate-1 1              1801   I                                    
-Inserted   AuditRatingId-2 PlayerId-1 RatingId-2 AuditStartDate-2 AuditEndDate-1 RatingDate-1 4              1992   I                                    
+Inserted   AuditRatingId-2 PlayerId-1 RatingId-2 AuditStartDate-1 AuditEndDate-1 RatingDate-1 4              1992   I                                    
 Inserted   AuditRatingId-3 PlayerId-2 RatingId-3 AuditStartDate-2 AuditEndDate-1 RatingDate-2 1              1836   I                                    
 Inserted   AuditRatingId-4 PlayerId-2 RatingId-4 AuditStartDate-2 AuditEndDate-1 RatingDate-2 4              1918   I                                    
                                                                                                
