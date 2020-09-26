@@ -47,14 +47,19 @@ namespace DbTests
             collection.DefineTable("[Chess].[AuditPlayer]")
                 .IsReference("PlayerId", "[Chess].[Player]", "PlayerId") //The audit table does not have the player ID defined as a foreign key, so no relationship is defined automatically. We define it manually to make the keys consistent.
                 .IsUnpredictable("AuditStartDate") //* These dates will match the update timestamp. They are set by a trigger, not a default
-                .IsUnpredictable("AuditEndDate");  //* otherwise unpredictability would have been set automatically.
+                .IsUnpredictable("AuditEndDate")   //* otherwise unpredictability would have been set automatically.
+                .Local("AuditStartDate")           //* And they are...
+                .Local("AuditEndDate");            //* local dates
 
             collection.DefineTable("[Chess].[AuditRating]")
                 .IsReference("PlayerId", "[Chess].[Player]", "PlayerId") //The audit table does not have the player ID defined as a foreign key, so no relationship is defined automatically. We define it manually to make the keys consistent.
                 .IsReference("RatingId", "[Chess].[Rating]", "RatingId") //The audit table does not have the Rating Id defined as a foreign key, so no relationship is defined automatically. We define it manually to make the keys consistent.
                 .IsUnpredictable("AuditStartDate") //* These dates will match the update timestamp. They are set by a trigger, not a default
                 .IsUnpredictable("AuditEndDate")   //* otherwise unpredictability would have been set automatically.
-                .IsUnpredictable("RatingDate");    //* 
+                .IsUnpredictable("RatingDate")     //* 
+                .Local("AuditStartDate")           //* And they are...
+                .Local("AuditEndDate")             //* local dates
+                .Local("RatingDate");              //*
 
             var builder = collection.Snapshot("before");
 

@@ -11,11 +11,13 @@ namespace SQLServerSnapshots.Schemas
         {
             Name = column.Name;
             InPrimaryKey = column.InPrimaryKey;
-            IsUnpredictable = UnpredictableColumnDetector.IsUnpredictable(column);
+            (IsUnpredictable, IsUtcDateTime, IsLocalDateTime) = UnpredictableColumnDetector.IsUnpredictable(column);
         }
 
         internal string Name { get; }
         internal bool InPrimaryKey { get; }
         public bool IsUnpredictable { get; }
+        public bool IsUtcDateTime { get; }
+        public bool IsLocalDateTime { get; }
     }
 }

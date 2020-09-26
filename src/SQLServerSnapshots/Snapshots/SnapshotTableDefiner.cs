@@ -19,6 +19,12 @@ namespace SQLServerSnapshots.Snapshots
                     tableDef.PrimaryKey(column.Name);
                     if (column.IsUnpredictable)
                         tableDef.IsUnpredictable(column.Name);
+
+                    if (column.IsUtcDateTime)
+                        tableDef.Utc(column.Name);
+
+                    if (column.IsLocalDateTime)
+                        tableDef.Local(column.Name);
                 }
 
                 foreach (var reference in table.References)

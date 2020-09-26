@@ -35,7 +35,7 @@ CONSTRAINT fk_B_MainId
 );
 GO
 ";
-    
+
         public TestSnapshotTableDefiner()
         {
             DbController.TearDown();

@@ -8,7 +8,7 @@ namespace SQLServerSnapshots.Schemas
 {
     internal static class UnpredictableColumnDetector
     {
-        public static bool IsUnpredictable(Column column)
+        public static (bool IsUnpredictable, bool IsUtcDateTime, bool IsLocalDateTime) IsUnpredictable(Column column)
         {
             switch (column.DataType.SqlDataType)
             {
@@ -24,23 +24,27 @@ namespace SQLServerSnapshots.Schemas
 
                     break;
             }
-            return column.Identity || column.DataType.SqlDataType == SqlDataType.UniqueIdentifier;
+
+            var isUnpredictable = column.Identity || column.DataType.SqlDataType == SqlDataType.UniqueIdentifier;
+            return (isUnpredictable, false, false);
         }
 
-        private static bool IsCurrentTimeDefault(DefaultConstraint constraint)
+        private static (bool IsUnpredictable, bool IsUtcDateTime, bool IsLocalDateTime) IsCurrentTimeDefault(DefaultConstraint constraint)
         {
             var text = constraint.Text;
             switch (text)
             {
-                case "(getdate())":
                 case "(getutcdate())":
-                case "(sysdatetime())":
                 case "(sysutcdatetime())":
+                    return (true, true, false);
+
+                case "(getdate())":
+                case "(sysdatetime())":
                 case "(sysdatetimeoffset())":
-                    return true;
+                    return (true, false, true);
 
                 default:
-                    return false;
+                    return (false, false, false);
             }
         }
     }

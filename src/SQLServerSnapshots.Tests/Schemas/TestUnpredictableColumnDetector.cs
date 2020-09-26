@@ -60,7 +60,7 @@ GO
                 var column = GetColumn("AKey");
 
                 //Act
-                var result = UnpredictableColumnDetector.IsUnpredictable(column);
+                var (result, _, _) = UnpredictableColumnDetector.IsUnpredictable(column);
 
                 //Assert
                 result.Should().BeTrue();
@@ -74,7 +74,7 @@ GO
                 var column = GetColumn("AKey");
 
                 //Act
-                var result = UnpredictableColumnDetector.IsUnpredictable(column);
+                var (result, _, _)  = UnpredictableColumnDetector.IsUnpredictable(column);
 
                 //Assert
                 result.Should().BeTrue();
@@ -88,7 +88,7 @@ GO
                 var column = GetColumn("AKey");
 
                 //Act
-                var result = UnpredictableColumnDetector.IsUnpredictable(column);
+                var (result, _, _)  = UnpredictableColumnDetector.IsUnpredictable(column);
 
                 //Assert
                 result.Should().BeFalse();
@@ -137,10 +137,50 @@ GO
                 var column = GetColumn("Value");
 
                 //Act
-                var result = UnpredictableColumnDetector.IsUnpredictable(column);
+                var (result, _, _) = UnpredictableColumnDetector.IsUnpredictable(column);
 
                 //Assert
                 result.Should().Be(shouldBeUnpredictable);
+            }
+
+            [Theory]
+            [InlineData("DATETIME DEFAULT(GETDATE())", false)]
+            [InlineData("DATETIME DEFAULT(GETUTCDATE())", true)]
+            [InlineData("DATETIME DEFAULT(CURRENT_TIMESTAMP)", false)]
+            [InlineData("DATETIME DEFAULT(SYSDATETIME())", false)]
+            [InlineData("DATETIME DEFAULT(SYSDATETIMEOFFSET())", false)]
+            [InlineData("DATETIME DEFAULT(SYSUTCDATETIME())", true)]
+            public void DefaultedDateValuesAreUtc(string fieldDef, bool shouldBeUtc)
+            {
+                //Arrange
+                CreateTable(null, fieldDef);
+                var column = GetColumn("Value");
+
+                //Act
+                var (_, result, _) = UnpredictableColumnDetector.IsUnpredictable(column);
+
+                //Assert
+                result.Should().Be(shouldBeUtc);
+            }
+
+            [Theory]
+            [InlineData("DATETIME DEFAULT(GETDATE())", true)]
+            [InlineData("DATETIME DEFAULT(GETUTCDATE())", false)]
+            [InlineData("DATETIME DEFAULT(CURRENT_TIMESTAMP)", true)]
+            [InlineData("DATETIME DEFAULT(SYSDATETIME())", true)]
+            [InlineData("DATETIME DEFAULT(SYSDATETIMEOFFSET())", true)]
+            [InlineData("DATETIME DEFAULT(SYSUTCDATETIME())", false)]
+            public void DefaultedDateValuesAreLocal(string fieldDef, bool shouldBeLocal)
+            {
+                //Arrange
+                CreateTable(null, fieldDef);
+                var column = GetColumn("Value");
+
+                //Act
+                var (_, _, result) = UnpredictableColumnDetector.IsUnpredictable(column);
+
+                //Assert
+                result.Should().Be(shouldBeLocal);
             }
 
             [Fact]
@@ -151,7 +191,7 @@ GO
                 var column = GetColumn("Value");
 
                 //Act
-                var result = UnpredictableColumnDetector.IsUnpredictable(column);
+                var (result, _, _) = UnpredictableColumnDetector.IsUnpredictable(column);
 
                 //Assert
                 result.Should().BeFalse();
