@@ -85,12 +85,12 @@ namespace SQLServerSnapshots
             }
         }
 
-        public void ReportChanges(string before, string after, Output output)
+        public void ReportChanges(string before, string after, Output output, ChangeReportOptions changeReportOptions = ChangeReportOptions.Default)
         {
             lock (_lock)
             {
                 ConfigureCollection();
-                _collection.ReportChanges(before, after, output);
+                _collection.ReportChanges(before, after, output, changeReportOptions);
             }
         }
 
