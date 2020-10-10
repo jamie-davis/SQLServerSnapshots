@@ -91,5 +91,23 @@ GO
             //Assert
             select.Should().Be("SELECT * FROM [Test].[B_Related] WHERE [Name] LIKE 'First%'");
         }
+
+        [Fact]
+        public void ExcludedColumnsAreNotGenerated()
+        {
+            //Arrange
+            var collection = new SnapshotCollection();
+            var schema = SchemaStructureLoader.Load(DbController.Server, DbController.TestDbName, "Test");
+            SnapshotTableDefiner.Define(collection, schema);
+            var definitions = SnapshotDefinitionLoader.Load(GetType());
+            collection.ApplyDefinitions(definitions);
+            var table = schema.Tables.Single(t => t.Name == "[Test].[B_Related]");
+            
+            //Act
+            var select = SnapshotTableSelectBuilder.Build(table, collection.GetTableDefinition(table.Name));
+
+            //Assert
+            select.Should().Be("SELECT * FROM [Test].[B_Related] WHERE [Name] LIKE 'First%'");
+        }
     }
 }

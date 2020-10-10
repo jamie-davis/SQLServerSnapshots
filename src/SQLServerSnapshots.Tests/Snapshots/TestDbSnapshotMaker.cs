@@ -104,6 +104,27 @@ GO
         }
 
         [Fact]
+        public void ExcludedColumnsAreNotAddedToSnapshot()
+        {
+            //Arrange
+            var collection = new SnapshotCollection();
+            var schema = SchemaStructureLoader.Load(DbController.Server, DbController.TestDbName, "Test");
+            var builder = collection.NewSnapshot("Test");
+            SnapshotTableDefiner.Define(collection, schema);
+            collection.DefineTable("[Test].[B_Related]").Exclude("Name");
+
+            //Act
+            DbSnapshotMaker.Make(DbController.ConnectionString, builder, new [] { schema }, collection);
+
+            //Assert
+            var output = new Output();
+            output.WrapLine("The Name column should not be present in [Test].[B_Related] below:");
+            output.WriteLine();
+            collection.GetSnapshotReport("Test", output);
+            output.Report.Verify();
+        }
+
+        [Fact]
         public void CustomWhereClauseIsLoadedFromDefinition()
         {
             //Arrange

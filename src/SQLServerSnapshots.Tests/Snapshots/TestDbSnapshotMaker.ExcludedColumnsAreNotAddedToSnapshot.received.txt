@@ -1,0 +1,20 @@
+The Name column should not be present in [Test].[B_Related] below:                             
+                                                                                               
+[Test].[A_Main]                                                                                
+---------------                                                                                
+      MainId Name         CreatedDate                                                          
+------------ ------------ -------------------                                                  
+           1 First        23/08/2020 10:01:00                                                  
+           2 Second       23/08/2020 10:05:00                                                  
+[Test].[B_Related]                                                                             
+------------------                                                                             
+         BId       MainId Name                                                                 
+------------ ------------ ------------                                                         
+           1            1 First Sub 1                                                          
+           2            1 First Sub 2                                                          
+           3            1 First Sub 3                                                          
+           4            1 First Sub 4                                                          
+           5            2 Second Sub 1                                                         
+           6            2 Second Sub 2                                                         
+           7            2 Second Sub 3                                                         
+                                                                                               
