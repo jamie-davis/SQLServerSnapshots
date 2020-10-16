@@ -1,0 +1,6 @@
+[Test].[A_Main]                                                                                
+---------------                                                                                
+MainId CreatedDate         Comment                                                                                            
+------ ------------------- ---------------------------------------------------------------------------------------------------
+   101 16/10/2020 08:16:00 This row was added manually, not snapped from the database. This column isn't even in the database.
+                                                                                               

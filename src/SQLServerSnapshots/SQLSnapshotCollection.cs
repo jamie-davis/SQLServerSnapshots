@@ -52,13 +52,14 @@ namespace SQLServerSnapshots
             _schemas[schema] = SchemaStructureLoader.Load(connectionStringBuilder.DataSource, connectionStringBuilder.InitialCatalog, schema);
         }
 
-        public SnapshotBuilder Snapshot(string snapshotName)
+        public SnapshotBuilder Snapshot(string snapshotName, SnapshotOptions snapshotOpts = SnapshotOptions.Default)
         {
             lock (_lock)
             {
                 ConfigureCollection();
                 var builder = _collection.NewSnapshot(snapshotName);
-                DbSnapshotMaker.Make(_connectionString, builder, _schemas.Values, _collection);
+                if ((snapshotOpts & SnapshotOptions.NoAutoSnapshot) == 0)
+                    DbSnapshotMaker.Make(_connectionString, builder, _schemas.Values, _collection);
                 _snapshotTaken = true;
                 return builder;
             }

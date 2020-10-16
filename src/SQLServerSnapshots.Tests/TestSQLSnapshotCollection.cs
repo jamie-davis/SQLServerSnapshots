@@ -151,6 +151,27 @@ GO
         }
 
         [Fact]
+        public void AutomaticDataSnapshotCanBeAvoided()
+        {
+            //Arrange
+            var collection = new SqlSnapshotCollection(DbController.ConnectionString);
+            collection.ConfigureSchema("Test");
+            var builder = collection.Snapshot("Test", SnapshotOptions.NoAutoSnapshot);
+            var row = builder.AddNewRow("[Test].[A_Main]");
+            row["MainId"] = 101;
+            row["CreatedDate"] = DateTime.Parse("2020-10-16 08:16");
+            row["Comment"] = "This row was added manually, not snapped from the database. This column isn't even in the database.";
+            
+            //Act
+            var output = new Output();
+            collection.GetSnapshotReport("Test", output);
+
+
+            //Assert
+            output.Report.Verify();
+        }
+
+        [Fact]
         public void SchemaOverridesCanBeAppliedDirectly()
         {
             //Arrange
