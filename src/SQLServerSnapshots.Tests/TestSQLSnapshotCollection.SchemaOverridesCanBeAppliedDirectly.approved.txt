@@ -18,12 +18,11 @@ Table Name         Comparison Comparison Types
 ------------------ ---------- ---------- -------                                               
 [Test].[B_Related] False      False                                                            
                                                                                                
-           Is      Is                                                                      Referenced                     
-           Primary Compare Is            Is          Is       Is       Is       Referenced Property   Sort      Sort  Date
-    Name   Key     Key     Unpredictable Predictable Required Included Excluded Table Name Name       Direction Index Type
-    ------ ------- ------- ------------- ----------- -------- -------- -------- ---------- ---------- --------- ----- ----
-    BId    True    False   True          False       False    False    False                                              
-    MainId False   False   False         False       False    False    False    [Test].    MainId                         
-                                                                                [A_Main]                                  
+           Is      Is                                                                           Referenced                     
+           Primary Compare Is            Is          Is       Is       Is       Referenced      Property   Sort      Sort  Date
+    Name   Key     Key     Unpredictable Predictable Required Included Excluded Table Name      Name       Direction Index Type
+    ------ ------- ------- ------------- ----------- -------- -------- -------- --------------- ---------- --------- ----- ----
+    BId    True    False   True          False       False    False    False                                                   
+    MainId False   False   False         False       False    False    False    [Test].[A_Main] MainId                         
                                                                                                
                                                                                                

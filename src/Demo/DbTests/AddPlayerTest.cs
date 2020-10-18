@@ -29,7 +29,7 @@ namespace DbTests
         }
 
         [Fact]
-        public async void DatabaseChangesAreFlagged()
+        public async void DatabaseChangesAreFlaggedFluent()
         {
             //Arrange
             var collection = new SqlSnapshotCollection(Config.ConnectionString);
@@ -76,5 +76,24 @@ namespace DbTests
             output.Report.Verify();
         }
 
+        [Fact]
+        public async void DatabaseChangesAreFlagged()
+        {
+            //Arrange
+            var collection = SchemaObjectMother.MakeCollection();
+
+            var entities = new ChessContext(Config.ConnectionString);
+            var builder = collection.Snapshot("before");
+
+            //Act
+            await _om.AddPlayerAsync("Bill", (ChessObjectMother.ChessDotCom, 1801), (ChessObjectMother.Lichess, 1992));
+            await _om.AddPlayerAsync("Ted", (ChessObjectMother.ChessDotCom, 1836), (ChessObjectMother.Lichess, 1918));
+            collection.Snapshot("after");
+
+            //Assert
+            var output = new Output();
+            collection.ReportChanges("before", "after", output);
+            output.Report.Verify();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Data.SqlClient;
 using SnapshotTests;
 using SQLServerSnapshots.Exceptions;
@@ -27,7 +28,11 @@ namespace SQLServerSnapshots.Utilities
                     conn.Open();
                     var result = command.ExecuteScalar();
                     if (result is DateTime dateTime)
+                    {
+                        dateTime -= TimeSpan.FromMilliseconds(dateTime.Millisecond);
+                        Debug.WriteLine($"Returning timestamp: {dateTime:O}");
                         return dateTime;
+                    }
 
                     throw new UnableToGetDateTimeException();
                 }

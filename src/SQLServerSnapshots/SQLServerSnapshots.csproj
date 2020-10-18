@@ -2,11 +2,26 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Version>1.0.0</Version>
+    <Description>A library for unit testing against SQLServer to compare data before and after running a test.
+
+Point the library at a database instance and it will configure itself from the database schema. You can then request a snapshot of the data prior to running your test code, and take a second snapshot after the code has completed. The two snapshots can then be compared and a report will be generated showing the changes.
+
+Unpredictable values (such as IDENTITY keys or timestamps) in the difference report will be replaced by placeholders so that the test results will be consistent each time the test is run.</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.SqlServer.SqlManagementObjects" Version="161.41011.9" />
-    <PackageReference Include="SnapshotTests" Version="0.20.0-beta" />
+    <PackageReference Include="SnapshotTests" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

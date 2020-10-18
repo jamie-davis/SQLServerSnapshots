@@ -1,0 +1,67 @@
+Default schema                                                                                 
+                                                                                               
+Table Definitions                                                                              
+-----------------                                                                              
+                       Exclude               Defined                                           
+                       From       Include In By                                                
+Table Name             Comparison Comparison Types                                             
+---------------------- ---------- ---------- -------                                           
+[Chess].[AuditPlayer]  False      False                                                        
+                                                                                               
+                  Is      Is                                                                      Referenced                     
+                  Primary Compare Is            Is          Is       Is       Is       Referenced Property   Sort      Sort  Date
+    Name          Key     Key     Unpredictable Predictable Required Included Excluded Table Name Name       Direction Index Type
+    ------------- ------- ------- ------------- ----------- -------- -------- -------- ---------- ---------- --------- ----- ----
+    PlayerAuditId True    False   True          False       False    False    False                                              
+                                                                                               
+                       Exclude               Defined                                           
+                       From       Include In By                                                
+Table Name             Comparison Comparison Types                                             
+---------------------- ---------- ---------- -------                                           
+[Chess].[AuditRating]  False      False                                                        
+                                                                                               
+                  Is      Is                                                                      Referenced                     
+                  Primary Compare Is            Is          Is       Is       Is       Referenced Property   Sort      Sort  Date
+    Name          Key     Key     Unpredictable Predictable Required Included Excluded Table Name Name       Direction Index Type
+    ------------- ------- ------- ------------- ----------- -------- -------- -------- ---------- ---------- --------- ----- ----
+    AuditRatingId True    False   True          False       False    False    False                                              
+                                                                                               
+                       Exclude               Defined                                           
+                       From       Include In By                                                
+Table Name             Comparison Comparison Types                                             
+---------------------- ---------- ---------- -------                                           
+[Chess].[Player]       False      False                                                        
+                                                                                               
+             Is      Is                                                                      Referenced                     
+             Primary Compare Is            Is          Is       Is       Is       Referenced Property   Sort      Sort  Date
+    Name     Key     Key     Unpredictable Predictable Required Included Excluded Table Name Name       Direction Index Type
+    -------- ------- ------- ------------- ----------- -------- -------- -------- ---------- ---------- --------- ----- ----
+    PlayerId True    False   True          False       False    False    False                                              
+                                                                                               
+                       Exclude               Defined                                           
+                       From       Include In By                                                
+Table Name             Comparison Comparison Types                                             
+---------------------- ---------- ---------- -------                                           
+[Chess].[Rating]       False      False                                                        
+                                                                                               
+                   Is      Is                                                                                                                     
+                   Primary Compare Is            Is          Is       Is       Is                              Referenced     Sort      Sort  Date
+    Name           Key     Key     Unpredictable Predictable Required Included Excluded Referenced Table Name  Property Name  Direction Index Type
+    -------------- ------- ------- ------------- ----------- -------- -------- -------- ---------------------- -------------- --------- ----- ----
+    RatingId       True    False   True          False       False    False    False                                                              
+    PlayerId       False   False   False         False       False    False    False    [Chess].[Player]       PlayerId                           
+    RatingSourceId False   False   False         False       False    False    False    [Chess].[RatingSource] RatingSourceId                     
+                                                                                               
+                       Exclude               Defined                                           
+                       From       Include In By                                                
+Table Name             Comparison Comparison Types                                             
+---------------------- ---------- ---------- -------                                           
+[Chess].[RatingSource] False      False                                                        
+                                                                                               
+                   Is      Is                                                                      Referenced                     
+                   Primary Compare Is            Is          Is       Is       Is       Referenced Property   Sort      Sort  Date
+    Name           Key     Key     Unpredictable Predictable Required Included Excluded Table Name Name       Direction Index Type
+    -------------- ------- ------- ------------- ----------- -------- -------- -------- ---------- ---------- --------- ----- ----
+    RatingSourceId True    False   True          False       False    False    False                                              
+                                                                                               
+                                                                                               

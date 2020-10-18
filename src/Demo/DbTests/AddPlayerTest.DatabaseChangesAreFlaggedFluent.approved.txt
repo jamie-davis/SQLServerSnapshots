@@ -1,0 +1,39 @@
+[Chess].[AuditPlayer]                                                                          
+---------------------                                                                          
+Difference PlayerAuditId   PlayerId   AuditStartDate       AuditEndDate   Name AuditStartOperation AuditEndOperation
+---------- --------------- ---------- -------------------- -------------- ---- ------------------- -----------------
+Inserted   PlayerAuditId-1 PlayerId-1 AuditStartDate@after AuditEndDate-1 Bill I                                    
+Inserted   PlayerAuditId-2 PlayerId-2 AuditStartDate@after AuditEndDate-1 Ted  I                                    
+                                                                                               
+[Chess].[AuditRating]                                                                          
+---------------------                                                                          
+Difference AuditRatingId   PlayerId   RatingId   AuditStartDate       AuditEndDate   RatingDate       RatingSourceId Rating AuditStartOperation AuditEndOperation
+---------- --------------- ---------- ---------- -------------------- -------------- ---------------- -------------- ------ ------------------- -----------------
+Inserted   AuditRatingId-1 PlayerId-1 RatingId-1 AuditStartDate@after AuditEndDate-1 RatingDate@after 1              1801   I                                    
+Inserted   AuditRatingId-2 PlayerId-1 RatingId-2 AuditStartDate@after AuditEndDate-1 RatingDate@after 4              1992   I                                    
+Inserted   AuditRatingId-3 PlayerId-2 RatingId-3 AuditStartDate@after AuditEndDate-1 RatingDate@after 1              1836   I                                    
+Inserted   AuditRatingId-4 PlayerId-2 RatingId-4 AuditStartDate@after AuditEndDate-1 RatingDate@after 4              1918   I                                    
+                                                                                               
+[Chess].[Player]                                                                               
+----------------                                                                               
+Difference PlayerId   Name                                                                     
+---------- ---------- ----                                                                     
+Inserted   PlayerId-1 Bill                                                                     
+Inserted   PlayerId-2 Ted                                                                      
+                                                                                               
+[Chess].[Rating]                                                                               
+----------------                                                                               
+Difference RatingId   PlayerId   RatingSourceId   RatingDate   Rating                          
+---------- ---------- ---------- ---------------- ------------ ------                          
+Inserted   RatingId-1 PlayerId-1 RatingSourceId-1 RatingDate-1 1801                            
+Inserted   RatingId-2 PlayerId-1 RatingSourceId-2 RatingDate-1 1992                            
+Inserted   RatingId-3 PlayerId-2 RatingSourceId-1 RatingDate-2 1836                            
+Inserted   RatingId-4 PlayerId-2 RatingSourceId-2 RatingDate-2 1918                            
+                                                                                               
+[Chess].[RatingSource]                                                                         
+----------------------                                                                         
+Difference RatingSourceId   Name                                                               
+---------- ---------------- -----------                                                        
+Reference  RatingSourceId-1 Chess.com                                                          
+Reference  RatingSourceId-2 Lichess.org                                                        
+                                                                                               
